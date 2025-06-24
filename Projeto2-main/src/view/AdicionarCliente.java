@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import net.miginfocom.swing.MigLayout;
+import view.cliente.ClientePage;
+
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -33,6 +35,8 @@ public class AdicionarCliente extends JFrame {
 	private JTextField telefone;
 	private JTextField nome;
 	private JTextField documento;
+	private ClientePage TelaAnterior;
+
 
 	/**
 	 * Launch the application.
@@ -53,8 +57,12 @@ public class AdicionarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdicionarCliente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	public AdicionarCliente() { // para poder ter um main, talvez tirar o main seja bom para nao deixar o codigo redundante?
+	}
+	public AdicionarCliente(ClientePage TelaAnterior) {
+		this.TelaAnterior = TelaAnterior; // para fazer a tela anterior aparecer quando essa for fechada
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -121,7 +129,10 @@ public class AdicionarCliente extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				// telaAnterior.setVisible(true);
+				if (TelaAnterior != null) {
+	            	TelaAnterior.setVisible(true);
+	            }
+	            
 			}
 		});
 		contentPane.add(btnCancelar, "cell 3 7");
@@ -156,8 +167,11 @@ public class AdicionarCliente extends JFrame {
 				
 				JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
 	            dispose();
-		    // telaAnterior.setVisible(true);
-
+	            if (TelaAnterior != null) {
+	            	TelaAnterior.setVisible(true);
+	            }
+	            
+	            
 	            
 				} catch (Exception ex){
 					ex.printStackTrace();
