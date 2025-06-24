@@ -120,7 +120,8 @@ public class AdicionarCliente extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				dispose();
+				// telaAnterior.setVisible(true);
 			}
 		});
 		contentPane.add(btnCancelar, "cell 3 7");
@@ -155,6 +156,8 @@ public class AdicionarCliente extends JFrame {
 				
 				JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
 	            dispose();
+		    // telaAnterior.setVisible(true);
+
 	            
 				} catch (Exception ex){
 					ex.printStackTrace();
