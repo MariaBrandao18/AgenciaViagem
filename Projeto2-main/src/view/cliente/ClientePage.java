@@ -16,7 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import model.CadastroCliente;
+import classes.CadastroCliente;
+import view.AdicionarCliente;
 import view.Menu;
 
 public class ClientePage extends JFrame {
@@ -74,12 +75,9 @@ public class ClientePage extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					CadastroCliente.incluirCliente();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				
+				AdicionarCliente telaAdicionar = new AdicionarCliente(ClientePage.this);
+				telaAdicionar.setVisible(true); 
+				setVisible(false);
 			}
 			
 		});
