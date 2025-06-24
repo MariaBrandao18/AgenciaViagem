@@ -58,10 +58,21 @@ public class AdicionarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public AdicionarCliente() { // para poder ter um main, talvez tirar o main seja bom para nao deixar o codigo redundante?
+	private boolean validarCampos(String nome, String email, String telefone, String documento) {
+	    if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty() || documento.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, 
+	            "Todos os campos (Nome, E-mail, Telefone, Documento) são obrigatórios.", 
+	            "Campos obrigatórios", 
+	            JOptionPane.WARNING_MESSAGE);
+	        return false;
+	    }
+	    return true;
+	}
+	
+	public AdicionarCliente() {
 	}
 	public AdicionarCliente(ClientePage TelaAnterior) {
-		this.TelaAnterior = TelaAnterior; // para fazer a tela anterior aparecer quando essa for fechada
+		this.TelaAnterior = TelaAnterior;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -139,49 +150,53 @@ public class AdicionarCliente extends JFrame {
 		
 		JButton btnNewButton = new JButton("Adicionar");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-				String nome1 = nome.getText();
-				String email1 = email.getText();
-				String telefone1 = telefone.getText();
-				String documento1 = documento.getText();
-				Cliente cliente;
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            String nome1 = nome.getText().trim();
+		            String email1 = email.getText().trim();
+		            String telefone1 = telefone.getText().trim();
+		            String documento1 = documento.getText().trim();
 
-				
-				if (rdbtnNacional.isSelected()) {
-	                cliente = new ClienteNacional();
-	                ((ClienteNacional) cliente).setCpf(documento1);
-	            } else if (rdbtnEstrangeiro.isSelected()) {
-	                cliente = new ClienteEstrangeiro();
-	                ((ClienteEstrangeiro) cliente).setPassaporte(documento1);
-	            } else {
-	            	JOptionPane.showMessageDialog(null, "Selecione o tipo de cliente!");
-	            	return;
-	            }
-				
-				cliente.setNome(nome1);
-				cliente.setEmail(email1);
-				cliente.setTelefone(telefone1);
-				
-				ClienteDAO.inserirCliente(cliente);
-				
-				JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
-	            dispose();
-	            if (TelaAnterior != null) {
-	            	TelaAnterior.setVisible(true);
-	            }
-	            
-	            
-	            
-				} catch (Exception ex){
-					ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Erro ao adicionar cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
+		            if (!validarCampos(nome1, email1, telefone1, documento1)) {
+		                return;
+		            }
+
+		            Cliente cliente = null;
+		            if (rdbtnNacional.isSelected()) {
+		                cliente = new ClienteNacional();
+		                ((ClienteNacional) cliente).setCpf(documento1);
+		            } else if (rdbtnEstrangeiro.isSelected()) {
+		                cliente = new ClienteEstrangeiro();
+		                ((ClienteEstrangeiro) cliente).setPassaporte(documento1);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Selecione o tipo de cliente!");
+		                return;
+		            }
+
+		            cliente.setNome(nome1);
+		            cliente.setEmail(email1);
+		            cliente.setTelefone(telefone1);
+
+		            ClienteDAO.inserirCliente(cliente);
+
+		            JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
+		            dispose();
+		            if (TelaAnterior != null) {
+		                TelaAnterior.setVisible(true);
+		            }
+
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, 
+		                "Erro ao adicionar cliente: " + ex.getMessage(), 
+		                "Erro", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
 		});
+
 		contentPane.add(btnNewButton, "cell 5 7");
 
 	}
-
+	
+	
 }
