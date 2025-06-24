@@ -1,21 +1,21 @@
 
-package model;
+package classes;
 
 import java.util.ArrayList;
 
-public abstract class ServicoAdicional {
+public class ServicoAdicional {
 	// variaveis
 	String nome;
 	double preco;
-	static ArrayList<ServicoAdicional> servicos = new ArrayList<ServicoAdicional>();
+	String descricao;
+	Long servico_id;
 	
 	// construtor
-	public ServicoAdicional(String nome, double preco) {
+	public ServicoAdicional(String nome, double preco, String descricao) {
 		this.nome = nome;
 		this.preco = preco;
-		servicos.add(this);
+		this.descricao = descricao;
 	}
-	
 	
 	
 	//funcoes
@@ -32,69 +32,44 @@ public abstract class ServicoAdicional {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	public static ArrayList<ServicoAdicional> getServicos() {
-		return servicos;
+	public String getDescricao() {
+		return descricao;
 	}
-	public static void setServicos(ArrayList<ServicoAdicional> servicos) {
-		ServicoAdicional.servicos = servicos;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
-	public void adicionarServico(ServicoAdicional servico) {
-	        servicos.add(servico);
-	    }
-	
-	
-	public void listarServicos() {
-		for (ServicoAdicional s : servicos) {
-			System.out.println(" Nome: " + s.nome +
-							   "Preco: " + s.preco);
-		}
+	public Long getServicoId() {
+		return servico_id;
 	}
-	
-	public void buscarServico(String servicoBuscado) {
-		for (ServicoAdicional s : servicos) {
-			if (s.nome.equals(servicoBuscado)) {
-				System.out.println(servicoBuscado + " foi encontrado!");
-				return;
-			}
-		}
-	}
-	
-	public void removerServico(String servicoRemovido) {
-		for (ServicoAdicional s : servicos) {
-			if (s.nome.equals(servicoRemovido)) {
-				System.out.println(servicoRemovido + " foi removido!");
-				servicos.remove(s);
-				return;
-			}
-		}
+	public void setServicoId(Long servico_id) {
+		this.servico_id = servico_id;
 	}
 }
 
+	
+
+
 // Servicos adicionais
 class Translado extends ServicoAdicional{
-	public Translado(String nome, double preco) {
-		super(nome,preco);
-		servicos.add(this);
+	public Translado(String nome, double preco, String descricao) {
+		super(nome,preco, descricao);
 	}
 }
 
 class Passeios extends ServicoAdicional{
-	public Passeios(String nome, double preco) {
-		super(nome,preco);
-		servicos.add(this);
+	public Passeios(String nome, double preco, String descricao) {
+		super(nome,preco, descricao);
 	}
 }
 
 class MotoristaParticular extends ServicoAdicional{
-	public MotoristaParticular(String nome, double preco) {
-		super(nome,preco);
-		servicos.add(this);
+	public MotoristaParticular(String nome, double preco, String descricao) {
+		super(nome,preco, descricao);
 	}
 }
 
 class AluguelCarro extends ServicoAdicional{
-	public AluguelCarro(String nome, double preco) {
-		super(nome,preco);
-		servicos.add(this);
+	public AluguelCarro(String nome, double preco, String descricao) {
+		super(nome,preco, descricao);
 	}
 }
